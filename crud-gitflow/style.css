@@ -1,216 +1,215 @@
-body {
+body{
 
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
-    max-width: 750px;
+    background:#f4f6f9;
 
-    margin: 40px auto;
+    margin:0;
 
-    background: #f5f5f5;
+    padding:40px;
 
-    color: #333;
-
-}
-
-
-/* Titulo principal */
-
-h1 {
-
-    text-align: center;
-
-    color: #0d6efd;
+    color:#333;
 
 }
 
 
-h2 {
+#login,
+#crud{
 
-    text-align: center;
+    max-width:700px;
 
-}
-
-
-
-/* Formulario */
-
-.formulario {
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-
-    text-align: center;
+    margin:auto;
 
 }
 
 
+h1{
 
-/* Inputs */
+    text-align:center;
 
-input {
+    color:#0d6efd;
 
-    padding: 12px;
-
-    margin: 8px;
-
-    width: 250px;
-
-    border: 1px solid #ccc;
-
-    border-radius: 6px;
-
-    font-size: 14px;
+    margin-bottom:10px;
 
 }
 
 
+h2{
 
-input:focus {
+    color:#444;
 
-    outline: none;
-
-    border-color: #0d6efd;
-
-}
-
-
-
-/* Botones */
-
-button {
-
-    padding: 10px 15px;
-
-    margin: 5px;
-
-    cursor: pointer;
-
-    background: #0d6efd;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 6px;
-
-    font-size: 14px;
+    text-align:center;
 
 }
 
 
+.descripcion{
 
-button:hover {
+    text-align:center;
 
-    background: #0a58ca;
+    color:#666;
 
-}
-
-
-
-/* Dashboard */
-
-.dashboard {
-
-    background: white;
-
-    margin-top: 20px;
-
-    padding: 20px;
-
-    border-radius: 12px;
-
-    text-align: center;
-
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom:25px;
 
 }
 
 
+.formulario{
 
-.dashboard p {
+    background:#fff;
 
-    font-size: 18px;
+    padding:25px;
 
-}
+    border-radius:10px;
 
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
 
+    display:flex;
 
-/* Buscador */
-
-#buscar {
-
-    display: block;
-
-    margin: 20px auto;
-
-    width: 300px;
+    flex-direction:column;
 
 }
 
 
+.formulario input{
 
-/* Lista */
+    padding:12px;
 
-#listaUsuarios {
+    margin-bottom:15px;
 
-    padding: 0;
+    border:1px solid #ccc;
 
-}
+    border-radius:6px;
 
-
-
-/* Usuarios */
-
-li {
-
-    list-style: none;
-
-    background: white;
-
-    margin-top: 15px;
-
-    padding: 18px;
-
-    border-radius: 10px;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-
-    min-height: 50px;
+    font-size:15px;
 
 }
 
 
+button{
 
-/* Botones dentro de la lista */
+    padding:12px;
 
-li button {
+    border:none;
 
-    float: right;
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    color:white;
+
+    background:#0d6efd;
+
+    transition:.3s;
+
+}
+
+
+button:hover{
+
+    background:#0b5ed7;
+
+}
+
+
+.cerrar{
+
+    background:#dc3545;
+
+    float:right;
+
+    margin-bottom:20px;
+
+}
+
+
+.cerrar:hover{
+
+    background:#bb2d3b;
+
+}
+
+
+hr{
+
+    margin:30px 0;
+
+}
+
+
+#listaUsuarios{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+
+#listaUsuarios li{
+
+    background:white;
+
+    margin-bottom:15px;
+
+    padding:15px;
+
+    border-radius:8px;
+
+    box-shadow:0 2px 5px rgba(0,0,0,.08);
+
+}
+
+
+#listaUsuarios strong{
+
+    font-size:17px;
+
+    color:#0d6efd;
 
     margin-left: 8px;
 
 }
 
 
+#listaUsuarios button{
 
-/* Boton eliminar */
+    margin-top:10px;
 
-li button:last-child {
-
-    background: #dc3545;
+    margin-right:10px;
 
 }
 
 
+#listaUsuarios button:last-child{
 
-li button:last-child:hover {
+    background:#dc3545;
 
-    background: #bb2d3b;
+}
+
+
+#listaUsuarios button:last-child:hover{
+
+    background:#bb2d3b;
+
+}
+
+
+@media (max-width:600px){
+
+    body{
+
+        padding:20px;
+
+    }
+
+    .formulario{
+
+        padding:15px;
+
+    }
 
 }
 

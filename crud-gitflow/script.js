@@ -2,6 +2,9 @@ let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
 let usuarioEditando = null;
 
+// =======================
+// LOGIN
+// =======================
 
 // Cargar usuarios al iniciar
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,15 +19,41 @@ document.addEventListener("DOMContentLoaded", () => {
 // Guardar o actualizar usuario
 function guardarUsuario(){
 
+        alert("Usuario o contraseña incorrectos.");
+
+    }
+
+}
+
+
+function cerrarSesion(){
+
+    document.getElementById("usuario").value = "";
+
+    document.getElementById("clave").value = "";
+
+    document.getElementById("login").style.display = "block";
+
+    document.getElementById("crud").style.display = "none";
+
+}
+
+
+
+// =======================
+// CRUD
+// =======================
+
+function guardarUsuario(){
 
     const nombre =
     document.getElementById("nombre").value.trim();
 
-
     const correo =
     document.getElementById("correo").value.trim();
 
-
+    const correo =
+    document.getElementById("correo").value.trim();
 
     if(nombre === "" || correo === ""){
 
@@ -34,15 +63,23 @@ function guardarUsuario(){
     }
 
 
+    // Evitar correos repetidos
+    const existe = usuarios.some(
 
-    if(!correo.includes("@")){
+        (usuario,index)=>
 
         alert("Ingrese un correo válido");
         return;
 
+    );
+
+    if(existe){
+
+        alert("Ese correo ya está registrado.");
+
+        return;
+
     }
-
-
 
 
     if(usuarioEditando !== null){
@@ -54,7 +91,6 @@ function guardarUsuario(){
 
 
         usuarioEditando = null;
-
 
         document.getElementById("btnGuardar").textContent =
         "Guardar Usuario";
@@ -83,24 +119,32 @@ function guardarUsuario(){
 
     limpiarFormulario();
 
-    mostrarUsuarios();
-
 
 }
 
+function mostrarUsuarios(){
 
+    const lista =
+    document.getElementById("listaUsuarios");
 
+    const mensaje =
+    document.getElementById("mensajeVacio");
 
+    lista.innerHTML = "";
 
+    if(usuarios.length === 0){
 
+        mensaje.style.display = "block";
 
 // Mostrar usuarios
 function mostrarUsuarios(lista = usuarios){
 
+    }
 
-    const listaHTML =
-    document.getElementById("listaUsuarios");
+    mensaje.style.display = "none";
 
+
+        lista.innerHTML += `
 
     if(!listaHTML) return;
 
@@ -139,19 +183,12 @@ function mostrarUsuarios(lista = usuarios){
                 Eliminar
             </button>
 
-
         </li>
 
 
         `;
 
-
     });
-
-
-
-    actualizarDashboard();
-
 
 }
 
@@ -173,8 +210,6 @@ function editarUsuario(index){
     document.getElementById("nombre").value =
     usuario.nombre;
 
-
-
     document.getElementById("correo").value =
     usuario.correo;
 
@@ -186,7 +221,6 @@ function editarUsuario(index){
 
     document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
-
 
 }
 
@@ -212,22 +246,23 @@ function eliminarUsuario(index){
     }
 
 
+    usuarios.splice(indice,1);
 
-    usuarios.splice(index,1);
-
+    limpiarFormulario();
 
 
     guardarDatos();
 
     mostrarUsuarios();
 
-
 }
 
 
 
+function mostrarUsuarios(){
 
-
+    const lista =
+    document.getElementById("listaUsuarios");
 
 
 
@@ -241,7 +276,11 @@ function buscarUsuario(){
     .value
     .toLowerCase();
 
+            <strong>${usuario.nombre}</strong>
 
+            <br>
+
+            ${usuario.correo}
 
     const resultados =
     usuarios.filter(usuario =>
@@ -262,8 +301,8 @@ function buscarUsuario(){
 
 
 
-    mostrarUsuarios(resultados);
 
+        </li>
 
 }
 
@@ -297,10 +336,18 @@ function actualizarDashboard(){
 
 
 
+function editarUsuario(indice){
 
+    document.getElementById("nombre").value =
+    usuarios[indice].nombre;
 
+    document.getElementById("correo").value =
+    usuarios[indice].correo;
 
+    usuarioEditando = indice;
 
+    document.getElementById("btnGuardar").textContent =
+    "Actualizar Usuario";
 
 // Exportar CSV
 function exportarUsuarios(){
@@ -364,6 +411,7 @@ function exportarUsuarios(){
 
     enlace.click();
 
+    if(confirm("¿Desea eliminar este usuario?")){
 
 }
 
@@ -385,6 +433,7 @@ function guardarDatos(){
 
     );
 
+    }
 
 }
 
@@ -398,11 +447,8 @@ function guardarDatos(){
 // Limpiar campos
 function limpiarFormulario(){
 
-
     document.getElementById("nombre").value = "";
 
-
     document.getElementById("correo").value = "";
-
 
 }
