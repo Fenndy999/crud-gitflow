@@ -169,6 +169,8 @@ hr{
 
     color:#0d6efd;
 
+    margin-left: 8px;
+
 }
 
 
@@ -208,5 +210,41 @@ hr{
         padding:15px;
 
     }
+
+}
+
+.descripcion {
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.formulario h2 {
+
+    color:#0d6efd;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.formulario label {
+
+    display:block;
+
+    text-align:left;
+
+    margin-left:80px;
+
+    margin-top:10px;
+
+    font-weight:bold;
 
 }

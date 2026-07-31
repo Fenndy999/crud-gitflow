@@ -1,6 +1,6 @@
 let usuarios = [];
-let usuarioEditando = null;
 
+let usuarioEditando = null;
 
 // =======================
 // LOGIN
@@ -60,6 +60,8 @@ function guardarUsuario(){
     const correo =
     document.getElementById("correo").value.trim();
 
+    const correo =
+    document.getElementById("correo").value.trim();
 
     if(nombre === "" || correo === ""){
 
@@ -92,9 +94,11 @@ function guardarUsuario(){
 
     if(usuarioEditando !== null){
 
+
         usuarios[usuarioEditando].nombre = nombre;
 
         usuarios[usuarioEditando].correo = correo;
+
 
         usuarioEditando = null;
 
@@ -113,8 +117,96 @@ function guardarUsuario(){
 
         });
 
+
     }
 
+    limpiarFormulario();
+
+
+}
+
+function mostrarUsuarios(){
+
+    const lista =
+    document.getElementById("listaUsuarios");
+
+    const mensaje =
+    document.getElementById("mensajeVacio");
+
+    lista.innerHTML = "";
+
+    if(usuarios.length === 0){
+
+        mensaje.style.display = "block";
+
+        return;
+
+    }
+
+    mensaje.style.display = "none";
+
+
+        lista.innerHTML += `
+
+    listaHTML.innerHTML = "";
+
+
+    ul.innerHTML = "";
+
+    lista.forEach((usuario,index)=>{
+
+
+        listaHTML.innerHTML += `
+
+
+            <strong>${usuario.nombre}</strong>
+
+            <br>
+
+            ${usuario.correo}
+
+        ul.innerHTML += `
+
+        <li>
+
+        <strong>${usuario.nombre}</strong>
+        <br>
+        ${usuario.correo}
+
+            <button onclick="eliminarUsuario(${index})">
+
+
+        <button onclick="eliminarUsuario(${index})">
+        Eliminar
+        </button>
+
+        </li>
+
+        `;
+
+    });
+
+}
+
+function editarUsuario(indice){
+
+    const usuario = usuarios[indice];
+
+    document.getElementById("nombre").value =
+    usuario.nombre;
+
+    document.getElementById("correo").value =
+    usuario.correo;
+
+
+    document.getElementById("btnGuardar").textContent =
+    "Actualizar Usuario";
+
+}
+
+function eliminarUsuario(indice){
+
+    usuarios.splice(indice,1);
 
     limpiarFormulario();
 
@@ -129,14 +221,17 @@ function mostrarUsuarios(){
     const lista =
     document.getElementById("listaUsuarios");
 
-    lista.innerHTML = "";
 
 
-    usuarios.forEach((usuario,index)=>{
+// Buscar usuarios
 
         lista.innerHTML += `
 
-        <li>
+    const texto =
+    document
+    .getElementById("buscar")
+    .value
+    .toLowerCase();
 
             <strong>${usuario.nombre}</strong>
 
@@ -144,21 +239,22 @@ function mostrarUsuarios(){
 
             ${usuario.correo}
 
-            <button onclick="editarUsuario(${index})">
+    const resultados =
+    usuarios.filter(usuario =>
 
-                Editar
 
-            </button>
+        usuario.nombre
+        .toLowerCase()
+        .includes(texto)
 
             <button onclick="eliminarUsuario(${index})">
 
-                Eliminar
 
-            </button>
 
         </li>
 
-        `;
+}
+
 
     });
 
@@ -182,6 +278,7 @@ function editarUsuario(indice){
 }
 
 
+        alert("No hay usuarios para exportar");
 
 function eliminarUsuario(indice){
 

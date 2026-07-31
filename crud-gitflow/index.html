@@ -13,6 +13,7 @@
 
 </head>
 
+
 <body>
 
     <!-- LOGIN -->
@@ -45,8 +46,9 @@
 
         </div>
 
-    </div>
+        </button>
 
+<div class="dashboard">
 
 
     <!-- CRUD -->
@@ -96,6 +98,42 @@
         </ul>
 
     </div>
+
+
+
+<h2>Lista de Usuarios</h2>
+
+
+
+
+<input
+    type="text"
+    id="buscar"
+    placeholder="Buscar usuario..."
+    onkeyup="buscarUsuario()"
+>
+
+
+
+<button 
+onclick="exportarUsuarios()"
+class="exportar">
+
+    Exportar usuarios CSV
+
+</button>
+
+
+
+
+<ul id="listaUsuarios">
+
+</ul>
+
+
+
+
+<script src="script.js"></script>
 
     <script src="script.js"></script>
 
