@@ -8,22 +8,35 @@ function guardarUsuario(){
 
 
     const nombre =
-    document.getElementById("nombre").value;
+    document.getElementById("nombre").value.trim();
 
 
     const correo =
-    document.getElementById("correo").value;
+    document.getElementById("correo").value.trim();
 
 
 
     if(nombre === "" || correo === ""){
 
         alert("Complete todos los campos");
+
         return;
 
     }
 
 
+
+    if(!correo.includes("@")){
+
+        alert("Ingrese un correo válido");
+
+        return;
+
+    }
+
+
+
+    // Editar usuario
 
     if(usuarioEditando !== null){
 
@@ -40,13 +53,19 @@ function guardarUsuario(){
         "Guardar Usuario";
 
 
-    }else{
+    }
+
+
+    // Crear usuario
+
+    else {
 
 
         usuarios.push({
 
-            nombre,
-            correo
+            nombre: nombre,
+
+            correo: correo
 
         });
 
@@ -59,7 +78,10 @@ function guardarUsuario(){
 
     mostrarUsuarios();
 
+
 }
+
+
 
 
 
@@ -68,15 +90,26 @@ function guardarUsuario(){
 function mostrarUsuarios(lista = usuarios){
 
 
-    const ul =
+    const listaHTML =
     document.getElementById("listaUsuarios");
+
+
+    listaHTML.innerHTML = "";
 
 
     ul.innerHTML = "";
 
-
-
     lista.forEach((usuario,index)=>{
+
+
+        listaHTML.innerHTML += `
+
+
+            <strong>${usuario.nombre}</strong>
+
+            <br>
+
+            ${usuario.correo}
 
 
         ul.innerHTML += `
@@ -117,15 +150,27 @@ function mostrarUsuarios(lista = usuarios){
 
 
 
+
+
+function editarUsuario(indice){
+
 function editarUsuario(index){
+
+    const usuario =
+    usuarios[indice];
 
 
     document.getElementById("nombre").value =
     usuarios[index].nombre;
 
+    document.getElementById("nombre").value =
+    usuario.nombre;
+
+
 
     document.getElementById("correo").value =
-    usuarios[index].correo;
+    usuario.correo;
+
 
 
 
@@ -142,7 +187,10 @@ function editarUsuario(index){
 
 
 
-function eliminarUsuario(index){
+
+
+
+function eliminarUsuario(indice){
 
 
     usuarios.splice(index,1);
@@ -157,6 +205,10 @@ function eliminarUsuario(index){
 
 
 
+
+
+
+// Buscar usuarios
 
 function buscarUsuario(){
 
@@ -192,11 +244,23 @@ function buscarUsuario(){
 
 
 
+
+
+// Dashboard
+
 function actualizarDashboard(){
 
 
-    document.getElementById("totalUsuarios").textContent =
-    usuarios.length;
+    const contador =
+    document.getElementById("totalUsuarios");
+
+
+    if(contador){
+
+        contador.textContent =
+        usuarios.length;
+
+    }
 
 
 }
@@ -206,19 +270,34 @@ function actualizarDashboard(){
 
 
 
+
+
+// Exportar CSV
+
 function exportarUsuarios(){
 
 
-    let contenido =
-    "Nombre,Correo\n";
+    if(usuarios.length === 0){
+
+
+        alert("No hay usuarios para exportar");
+
+        return;
+
+    }
 
 
 
-    usuarios.forEach(usuario=>{
+    let csv =
+    "ID,Nombre,Correo\n";
 
 
-        contenido +=
-        `${usuario.nombre},${usuario.correo}\n`;
+
+    usuarios.forEach((usuario,index)=>{
+
+
+        csv +=
+        `${index + 1},${usuario.nombre},${usuario.correo}\n`;
 
 
     });
@@ -226,10 +305,12 @@ function exportarUsuarios(){
 
 
     const archivo =
-    new Blob([contenido],
-    {
-        type:"text/csv"
-    });
+    new Blob(
+        [csv],
+        {
+            type:"text/csv"
+        }
+    );
 
 
 
@@ -244,11 +325,15 @@ function exportarUsuarios(){
 
 
     enlace.download =
-    "usuarios.csv";
+    "usuarios_exportados.csv";
 
 
 
     enlace.click();
+
+
+
+    alert("Usuarios exportados correctamente");
 
 
 }
@@ -258,12 +343,15 @@ function exportarUsuarios(){
 
 
 
+
+
 function limpiarFormulario(){
 
 
-    document.getElementById("nombre").value="";
+    document.getElementById("nombre").value = "";
 
-    document.getElementById("correo").value="";
+
+    document.getElementById("correo").value = "";
 
 
 }
