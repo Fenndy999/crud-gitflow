@@ -2,6 +2,56 @@ let usuarios = [];
 
 let usuarioEditando = null;
 
+// =======================
+// LOGIN
+// =======================
+
+function iniciarSesion(){
+
+    const usuario =
+    document.getElementById("usuario").value.trim();
+
+    const clave =
+    document.getElementById("clave").value.trim();
+
+
+    if(usuario === "admin" && clave === "1234"){
+
+        document.getElementById("login").style.display = "none";
+
+        document.getElementById("crud").style.display = "block";
+
+        alert("Bienvenido al sistema.");
+
+    }
+
+    else{
+
+        alert("Usuario o contraseña incorrectos.");
+
+    }
+
+}
+
+
+function cerrarSesion(){
+
+    document.getElementById("usuario").value = "";
+
+    document.getElementById("clave").value = "";
+
+    document.getElementById("login").style.display = "block";
+
+    document.getElementById("crud").style.display = "none";
+
+}
+
+
+
+// =======================
+// CRUD
+// =======================
+
 function guardarUsuario(){
 
     const nombre =
@@ -10,33 +60,37 @@ function guardarUsuario(){
     const correo =
     document.getElementById("correo").value.trim();
 
+    const correo =
+    document.getElementById("correo").value.trim();
+
     if(nombre === "" || correo === ""){
 
-        alert("Complete todos los campos");
+        alert("Complete todos los campos.");
 
         return;
 
     }
 
+
+    // Evitar correos repetidos
     const existe = usuarios.some(
 
-        (usuario, index) =>
+        (usuario,index)=>
 
-            usuario.correo.toLowerCase() === correo.toLowerCase() &&
-            index !== usuarioEditando
+        usuario.correo.toLowerCase() === correo.toLowerCase()
+
+        && index !== usuarioEditando
 
     );
 
     if(existe){
 
-        alert("Ya existe un usuario con ese correo.");
+        alert("Ese correo ya está registrado.");
 
         return;
 
     }
 
-
-    // Editar usuario
 
     if(usuarioEditando !== null){
 
@@ -53,15 +107,13 @@ function guardarUsuario(){
 
     }
 
-    // Modo crear
     else{
-
 
         usuarios.push({
 
-            nombre: nombre,
+            nombre,
 
-            correo: correo
+            correo
 
         });
 
@@ -156,29 +208,24 @@ function eliminarUsuario(indice){
 
     usuarios.splice(indice,1);
 
+    limpiarFormulario();
+
     mostrarUsuarios();
 
 }
 
-function limpiarFormulario(){
-
-    document.getElementById("nombre").value = "";
-
-    document.getElementById("correo").value = "";
-
-}
 
 
+function mostrarUsuarios(){
 
-
-
+    const lista =
+    document.getElementById("listaUsuarios");
 
 
 
 // Buscar usuarios
 
-function buscarUsuario(){
-
+        lista.innerHTML += `
 
     const texto =
     document
@@ -186,7 +233,11 @@ function buscarUsuario(){
     .value
     .toLowerCase();
 
+            <strong>${usuario.nombre}</strong>
 
+            <br>
+
+            ${usuario.correo}
 
     const resultados =
     usuarios.filter(usuario =>
@@ -196,129 +247,57 @@ function buscarUsuario(){
         .toLowerCase()
         .includes(texto)
 
-
-    );
-
+            <button onclick="eliminarUsuario(${index})">
 
 
-    mostrarUsuarios(resultados);
 
+        </li>
 
 }
-
-
-
-
-
-
-
-
-// Dashboard
-
-function actualizarDashboard(){
-
-
-    const contador =
-    document.getElementById("totalUsuarios");
-
-
-    if(contador){
-
-        contador.textContent =
-        usuarios.length;
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-// Exportar CSV
-
-function exportarUsuarios(){
-
-
-    if(usuarios.length === 0){
-
-
-        alert("No hay usuarios para exportar");
-
-        return;
-
-    }
-
-
-
-    let csv =
-    "ID,Nombre,Correo\n";
-
-
-
-    usuarios.forEach((usuario,index)=>{
-
-
-        csv +=
-        `${index + 1},${usuario.nombre},${usuario.correo}\n`;
 
 
     });
 
-
-
-    const archivo =
-    new Blob(
-        [csv],
-        {
-            type:"text/csv"
-        }
-    );
-
-
-
-    const enlace =
-    document.createElement("a");
-
-
-
-    enlace.href =
-    URL.createObjectURL(archivo);
-
-
-
-    enlace.download =
-    "usuarios_exportados.csv";
-
-
-
-    enlace.click();
-
-
-
-    alert("Usuarios exportados correctamente");
-
-
 }
 
 
 
+function editarUsuario(indice){
+
+    document.getElementById("nombre").value =
+    usuarios[indice].nombre;
+
+    document.getElementById("correo").value =
+    usuarios[indice].correo;
+
+    usuarioEditando = indice;
+
+    document.getElementById("btnGuardar").textContent =
+    "Actualizar Usuario";
+
+}
 
 
+        alert("No hay usuarios para exportar");
+
+function eliminarUsuario(indice){
+
+    if(confirm("¿Desea eliminar este usuario?")){
+
+        usuarios.splice(indice,1);
+
+        mostrarUsuarios();
+
+    }
+
+}
 
 
 
 function limpiarFormulario(){
 
-
     document.getElementById("nombre").value = "";
 
-
     document.getElementById("correo").value = "";
-
 
 }

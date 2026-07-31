@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CRUD de Usuarios - 1.0</title>
+    <title>CRUD de Usuarios - Login</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -16,70 +16,88 @@
 
 <body>
 
-    <h1>CRUD de Usuarios</h1>
+    <!-- LOGIN -->
 
-    <p class="descripcion">
-        Sistema para registrar, editar y eliminar usuarios de forma sencilla.
-    </p>
+    <div id="login">
 
-    <div class="formulario">
+        <h1>Inicio de Sesión</h1>
 
-        <h2>Registro de Usuario</h2>
+        <p class="descripcion">
+            Ingrese sus credenciales para acceder al sistema.
+        </p>
 
-        <label for="nombre">
-            Nombre
-        </label>
+        <div class="formulario">
 
-        <input
-            type="text"
-            id="nombre"
-            placeholder="Ingrese el nombre"
-        >
+            <input
+                type="text"
+                id="usuario"
+                placeholder="Usuario"
+            >
 
-        <label for="correo">
-            Correo electrónico
-        </label>
+            <input
+                type="password"
+                id="clave"
+                placeholder="Contraseña"
+            >
 
-        <input
-            type="email"
-            id="correo"
-            placeholder="Ingrese el correo"
-        >
+            <button onclick="iniciarSesion()">
+                Iniciar Sesión
+            </button>
 
-        <button
-            onclick="guardarUsuario()"
-            id="btnGuardar">
-
-            Guardar Usuario
+        </div>
 
         </button>
 
 <div class="dashboard">
 
-    <hr>
 
-    <h2>Lista de Usuarios</h2>
+    <!-- CRUD -->
 
-    <p id="mensajeVacio">
-        No hay usuarios registrados.
-    </p>
+    <div id="crud" style="display:none;">
 
-    <ul id="listaUsuarios">
+        <h1>CRUD de Usuarios</h1>
 
-        <strong id="totalUsuarios">
-            0
-        </strong>
+        <button
+            class="cerrar"
+            onclick="cerrarSesion()">
 
-    </p>
+            Cerrar Sesión
 
+        </button>
 
-</div>
+        <div class="formulario">
 
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Nombre del usuario"
+            >
 
+            <input
+                type="email"
+                id="correo"
+                placeholder="Correo del usuario"
+            >
 
+            <button
+                onclick="guardarUsuario()"
+                id="btnGuardar">
 
-<hr>
+                Guardar Usuario
 
+            </button>
+
+        </div>
+
+        <hr>
+
+        <h2>Lista de Usuarios</h2>
+
+        <ul id="listaUsuarios">
+
+        </ul>
+
+    </div>
 
 
 
