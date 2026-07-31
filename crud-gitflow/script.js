@@ -1,23 +1,134 @@
+let usuarios = [];
+let usuarioEditando = null;
 
-let datos=JSON.parse(localStorage.getItem('usuarios')||'[]');
-function render(){
- const ul=document.getElementById('lista'); ul.innerHTML='';
- datos.forEach((u,i)=>{
-  const li=document.createElement('li');
-  li.innerHTML=`${u.nombre} - ${u.correo}
-  <button onclick="eliminar(${i})">Eliminar</button>`;
-  ul.appendChild(li);
- });
- localStorage.setItem('usuarios',JSON.stringify(datos));
+
+function guardarUsuario(){
+
+    const nombre = document.getElementById("nombre").value;
+    const correo = document.getElementById("correo").value;
+
+
+    if(nombre === "" || correo === ""){
+
+        alert("Complete todos los campos");
+        return;
+
+    }
+
+
+    // Modo editar
+    if(usuarioEditando !== null){
+
+        usuarios[usuarioEditando].nombre = nombre;
+        usuarios[usuarioEditando].correo = correo;
+
+        usuarioEditando = null;
+
+        document.getElementById("btnGuardar").textContent = "Guardar Usuario";
+
+
+    } 
+    // Modo crear
+    else {
+
+        usuarios.push({
+
+            nombre: nombre,
+            correo: correo
+
+        });
+
+    }
+
+
+    mostrarUsuarios();
+
+
+    document.getElementById("nombre").value = "";
+    document.getElementById("correo").value = "";
+
 }
-function agregar(){
- const n=document.getElementById('nombre').value;
- const c=document.getElementById('correo').value;
- if(!n||!c)return alert('Complete los campos');
- datos.push({nombre:n,correo:c});
- document.getElementById('nombre').value='';
- document.getElementById('correo').value='';
- render();
+
+
+
+
+function mostrarUsuarios(){
+
+    const lista = document.getElementById("listaUsuarios");
+
+    lista.innerHTML = "";
+
+
+    usuarios.forEach((usuario,index)=>{
+
+
+        lista.innerHTML += `
+
+        <li>
+
+            <strong>${usuario.nombre}</strong>
+            -
+            ${usuario.correo}
+
+
+            <button onclick="editarUsuario(${index})">
+
+                Editar
+
+            </button>
+
+
+            <button onclick="eliminarUsuario(${index})">
+
+                Eliminar
+
+            </button>
+
+
+        </li>
+
+        `;
+
+
+    });
+
+
 }
-function eliminar(i){datos.splice(i,1);render();}
-render();
+
+
+
+
+
+function editarUsuario(indice){
+
+
+    const usuario = usuarios[indice];
+
+
+    document.getElementById("nombre").value = usuario.nombre;
+
+    document.getElementById("correo").value = usuario.correo;
+
+
+    usuarioEditando = indice;
+
+
+    document.getElementById("btnGuardar").textContent = 
+    "Actualizar Usuario";
+
+
+}
+
+
+
+
+function eliminarUsuario(indice){
+
+
+    usuarios.splice(indice,1);
+
+
+    mostrarUsuarios();
+
+
+}

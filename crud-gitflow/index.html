@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>CRUD Usuarios</title>
-<link rel="stylesheet" href="style.css"></head>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Usuarios</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<h1>CRUD de Usuarios</h1>
-<input id="nombre" placeholder="Nombre">
-<input id="correo" placeholder="Correo">
-<button onclick="agregar()">Guardar</button>
-<ul id="lista"></ul>
-<script src="script.js"></script>
-</body></html>
+    <h1>CRUD de Usuarios</h1>
+
+    <div class="formulario">
+
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Nombre del usuario"
+        >
+
+        <input
+            type="email"
+            id="correo"
+            placeholder="Correo del usuario"
+        >
+
+        <button onclick="guardarUsuario()" id="btnGuardar">
+            Guardar Usuario
+        </button>
+
+    </div>
+
+
+    <hr>
+
+
+    <h2>Lista de Usuarios</h2>
+
+    <ul id="listaUsuarios">
+
+    </ul>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
