@@ -1,9 +1,19 @@
-let usuarios = [];
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
 let usuarioEditando = null;
 
 
+// Cargar usuarios al iniciar
+document.addEventListener("DOMContentLoaded", () => {
 
+    mostrarUsuarios();
+
+});
+
+
+
+
+// Guardar o actualizar usuario
 function guardarUsuario(){
 
 
@@ -19,7 +29,6 @@ function guardarUsuario(){
     if(nombre === "" || correo === ""){
 
         alert("Complete todos los campos");
-
         return;
 
     }
@@ -29,14 +38,12 @@ function guardarUsuario(){
     if(!correo.includes("@")){
 
         alert("Ingrese un correo válido");
-
         return;
 
     }
 
 
 
-    // Editar usuario
 
     if(usuarioEditando !== null){
 
@@ -53,19 +60,17 @@ function guardarUsuario(){
         "Guardar Usuario";
 
 
-    }
 
-
-    // Crear usuario
-
-    else {
+    }else{
 
 
         usuarios.push({
 
-            nombre: nombre,
+            id: Date.now(),
 
-            correo: correo
+            nombre,
+
+            correo
 
         });
 
@@ -73,6 +78,8 @@ function guardarUsuario(){
     }
 
 
+
+    guardarDatos();
 
     limpiarFormulario();
 
@@ -87,6 +94,7 @@ function guardarUsuario(){
 
 
 
+// Mostrar usuarios
 function mostrarUsuarios(lista = usuarios){
 
 
@@ -94,10 +102,13 @@ function mostrarUsuarios(lista = usuarios){
     document.getElementById("listaUsuarios");
 
 
+    if(!listaHTML) return;
+
+
+
     listaHTML.innerHTML = "";
 
 
-    ul.innerHTML = "";
 
     lista.forEach((usuario,index)=>{
 
@@ -105,33 +116,32 @@ function mostrarUsuarios(lista = usuarios){
         listaHTML.innerHTML += `
 
 
+        <li>
+
+
             <strong>${usuario.nombre}</strong>
 
+
             <br>
+
 
             ${usuario.correo}
 
 
-        ul.innerHTML += `
 
-        <li>
-
-        <strong>${usuario.nombre}</strong>
-        <br>
-        ${usuario.correo}
+            <button onclick="editarUsuario(${index})">
+                Editar
+            </button>
 
 
-        <button onclick="editarUsuario(${index})">
-        Editar
-        </button>
 
-
-        <button onclick="eliminarUsuario(${index})">
-        Eliminar
-        </button>
+            <button onclick="eliminarUsuario(${index})">
+                Eliminar
+            </button>
 
 
         </li>
+
 
         `;
 
@@ -151,17 +161,14 @@ function mostrarUsuarios(lista = usuarios){
 
 
 
-
-function editarUsuario(indice){
-
+// Editar usuario
 function editarUsuario(index){
 
+
     const usuario =
-    usuarios[indice];
+    usuarios[index];
 
 
-    document.getElementById("nombre").value =
-    usuarios[index].nombre;
 
     document.getElementById("nombre").value =
     usuario.nombre;
@@ -173,8 +180,8 @@ function editarUsuario(index){
 
 
 
-
     usuarioEditando = index;
+
 
 
     document.getElementById("btnGuardar").textContent =
@@ -189,12 +196,28 @@ function editarUsuario(index){
 
 
 
+// Eliminar usuario
+function eliminarUsuario(index){
 
-function eliminarUsuario(indice){
+
+    const confirmar =
+    confirm("¿Desea eliminar este usuario?");
+
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
 
 
     usuarios.splice(index,1);
 
+
+
+    guardarDatos();
 
     mostrarUsuarios();
 
@@ -209,7 +232,6 @@ function eliminarUsuario(indice){
 
 
 // Buscar usuarios
-
 function buscarUsuario(){
 
 
@@ -226,6 +248,12 @@ function buscarUsuario(){
 
 
         usuario.nombre
+        .toLowerCase()
+        .includes(texto)
+
+        ||
+
+        usuario.correo
         .toLowerCase()
         .includes(texto)
 
@@ -246,8 +274,7 @@ function buscarUsuario(){
 
 
 
-// Dashboard
-
+// Actualizar contador
 function actualizarDashboard(){
 
 
@@ -255,10 +282,13 @@ function actualizarDashboard(){
     document.getElementById("totalUsuarios");
 
 
+
     if(contador){
+
 
         contador.textContent =
         usuarios.length;
+
 
     }
 
@@ -273,7 +303,6 @@ function actualizarDashboard(){
 
 
 // Exportar CSV
-
 function exportarUsuarios(){
 
 
@@ -297,19 +326,23 @@ function exportarUsuarios(){
 
 
         csv +=
-        `${index + 1},${usuario.nombre},${usuario.correo}\n`;
+        `${index + 1},"${usuario.nombre}","${usuario.correo}"\n`;
 
 
     });
 
 
 
+
     const archivo =
     new Blob(
+
         [csv],
+
         {
-            type:"text/csv"
+            type:"text/csv;charset=utf-8;"
         }
+
     );
 
 
@@ -332,8 +365,25 @@ function exportarUsuarios(){
     enlace.click();
 
 
+}
 
-    alert("Usuarios exportados correctamente");
+
+
+
+
+
+
+// Guardar en navegador
+function guardarDatos(){
+
+
+    localStorage.setItem(
+
+        "usuarios",
+
+        JSON.stringify(usuarios)
+
+    );
 
 
 }
@@ -345,6 +395,7 @@ function exportarUsuarios(){
 
 
 
+// Limpiar campos
 function limpiarFormulario(){
 
 
