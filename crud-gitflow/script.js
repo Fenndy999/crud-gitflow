@@ -1,11 +1,19 @@
 let usuarios = [];
+
 let usuarioEditando = null;
+
 
 
 function guardarUsuario(){
 
-    const nombre = document.getElementById("nombre").value;
-    const correo = document.getElementById("correo").value;
+
+    const nombre =
+    document.getElementById("nombre").value;
+
+
+    const correo =
+    document.getElementById("correo").value;
+
 
 
     if(nombre === "" || correo === ""){
@@ -16,73 +24,78 @@ function guardarUsuario(){
     }
 
 
-    // Modo editar
+
     if(usuarioEditando !== null){
 
+
         usuarios[usuarioEditando].nombre = nombre;
+
         usuarios[usuarioEditando].correo = correo;
+
 
         usuarioEditando = null;
 
-        document.getElementById("btnGuardar").textContent = "Guardar Usuario";
+
+        document.getElementById("btnGuardar").textContent =
+        "Guardar Usuario";
 
 
-    } 
-    // Modo crear
-    else {
+    }else{
+
 
         usuarios.push({
 
-            nombre: nombre,
-            correo: correo
+            nombre,
+            correo
 
         });
+
 
     }
 
 
+
+    limpiarFormulario();
+
     mostrarUsuarios();
-
-
-    document.getElementById("nombre").value = "";
-    document.getElementById("correo").value = "";
 
 }
 
 
 
 
-function mostrarUsuarios(){
 
-    const lista = document.getElementById("listaUsuarios");
-
-    lista.innerHTML = "";
+function mostrarUsuarios(lista = usuarios){
 
 
-    usuarios.forEach((usuario,index)=>{
+    const ul =
+    document.getElementById("listaUsuarios");
 
 
-        lista.innerHTML += `
+    ul.innerHTML = "";
+
+
+
+    lista.forEach((usuario,index)=>{
+
+
+        ul.innerHTML += `
 
         <li>
 
-            <strong>${usuario.nombre}</strong>
-            -
-            ${usuario.correo}
+        <strong>${usuario.nombre}</strong>
+        <br>
+        ${usuario.correo}
 
 
-            <button onclick="editarUsuario(${index})">
-
-                Editar
-
-            </button>
+        <button onclick="editarUsuario(${index})">
+        Editar
+        </button>
 
 
-            <button onclick="eliminarUsuario(${index})">
-
-                Eliminar
-
-            </button>
+        <button onclick="eliminarUsuario(${index})">
+        Eliminar
+        </button>
 
 
         </li>
@@ -93,27 +106,33 @@ function mostrarUsuarios(){
     });
 
 
+
+    actualizarDashboard();
+
+
 }
 
 
 
 
 
-function editarUsuario(indice){
+
+function editarUsuario(index){
 
 
-    const usuario = usuarios[indice];
+    document.getElementById("nombre").value =
+    usuarios[index].nombre;
 
 
-    document.getElementById("nombre").value = usuario.nombre;
-
-    document.getElementById("correo").value = usuario.correo;
-
-
-    usuarioEditando = indice;
+    document.getElementById("correo").value =
+    usuarios[index].correo;
 
 
-    document.getElementById("btnGuardar").textContent = 
+
+    usuarioEditando = index;
+
+
+    document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
 
 
@@ -122,13 +141,129 @@ function editarUsuario(indice){
 
 
 
-function eliminarUsuario(indice){
+
+function eliminarUsuario(index){
 
 
-    usuarios.splice(indice,1);
+    usuarios.splice(index,1);
 
 
     mostrarUsuarios();
+
+
+}
+
+
+
+
+
+
+function buscarUsuario(){
+
+
+    const texto =
+    document
+    .getElementById("buscar")
+    .value
+    .toLowerCase();
+
+
+
+    const resultados =
+    usuarios.filter(usuario =>
+
+
+        usuario.nombre
+        .toLowerCase()
+        .includes(texto)
+
+
+    );
+
+
+
+    mostrarUsuarios(resultados);
+
+
+}
+
+
+
+
+
+
+function actualizarDashboard(){
+
+
+    document.getElementById("totalUsuarios").textContent =
+    usuarios.length;
+
+
+}
+
+
+
+
+
+
+function exportarUsuarios(){
+
+
+    let contenido =
+    "Nombre,Correo\n";
+
+
+
+    usuarios.forEach(usuario=>{
+
+
+        contenido +=
+        `${usuario.nombre},${usuario.correo}\n`;
+
+
+    });
+
+
+
+    const archivo =
+    new Blob([contenido],
+    {
+        type:"text/csv"
+    });
+
+
+
+    const enlace =
+    document.createElement("a");
+
+
+
+    enlace.href =
+    URL.createObjectURL(archivo);
+
+
+
+    enlace.download =
+    "usuarios.csv";
+
+
+
+    enlace.click();
+
+
+}
+
+
+
+
+
+
+function limpiarFormulario(){
+
+
+    document.getElementById("nombre").value="";
+
+    document.getElementById("correo").value="";
 
 
 }
