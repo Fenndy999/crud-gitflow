@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de Usuarios</title>
+
+    <title>CRUD de Usuarios - 1.0</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
@@ -48,7 +54,7 @@
 
         </button>
 
-    </div>
+<div class="dashboard">
 
     <hr>
 
@@ -60,9 +66,59 @@
 
     <ul id="listaUsuarios">
 
-    </ul>
+        <strong id="totalUsuarios">
+            0
+        </strong>
+
+    </p>
+
+
+</div>
+
+
+
+
+<hr>
+
+
+
+
+<h2>Lista de Usuarios</h2>
+
+
+
+
+<input
+    type="text"
+    id="buscar"
+    placeholder="Buscar usuario..."
+    onkeyup="buscarUsuario()"
+>
+
+
+
+<button 
+onclick="exportarUsuarios()"
+class="exportar">
+
+    Exportar usuarios CSV
+
+</button>
+
+
+
+
+<ul id="listaUsuarios">
+
+</ul>
+
+
+
+
+<script src="script.js"></script>
 
     <script src="script.js"></script>
 
 </body>
+
 </html>

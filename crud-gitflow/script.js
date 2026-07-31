@@ -1,4 +1,5 @@
 let usuarios = [];
+
 let usuarioEditando = null;
 
 function guardarUsuario(){
@@ -34,12 +35,16 @@ function guardarUsuario(){
 
     }
 
-    // Modo editar
+
+    // Editar usuario
+
     if(usuarioEditando !== null){
+
 
         usuarios[usuarioEditando].nombre = nombre;
 
         usuarios[usuarioEditando].correo = correo;
+
 
         usuarioEditando = null;
 
@@ -51,6 +56,7 @@ function guardarUsuario(){
     // Modo crear
     else{
 
+
         usuarios.push({
 
             nombre: nombre,
@@ -59,11 +65,11 @@ function guardarUsuario(){
 
         });
 
+
     }
 
     limpiarFormulario();
 
-    mostrarUsuarios();
 
 }
 
@@ -87,11 +93,19 @@ function mostrarUsuarios(){
 
     mensaje.style.display = "none";
 
-    usuarios.forEach((usuario,index)=>{
 
         lista.innerHTML += `
 
-        <li>
+    listaHTML.innerHTML = "";
+
+
+    ul.innerHTML = "";
+
+    lista.forEach((usuario,index)=>{
+
+
+        listaHTML.innerHTML += `
+
 
             <strong>${usuario.nombre}</strong>
 
@@ -99,17 +113,20 @@ function mostrarUsuarios(){
 
             ${usuario.correo}
 
-            <button onclick="editarUsuario(${index})">
+        ul.innerHTML += `
 
-                Editar
+        <li>
 
-            </button>
+        <strong>${usuario.nombre}</strong>
+        <br>
+        ${usuario.correo}
 
             <button onclick="eliminarUsuario(${index})">
 
-                Eliminar
 
-            </button>
+        <button onclick="eliminarUsuario(${index})">
+        Eliminar
+        </button>
 
         </li>
 
@@ -129,7 +146,6 @@ function editarUsuario(indice){
     document.getElementById("correo").value =
     usuario.correo;
 
-    usuarioEditando = indice;
 
     document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
@@ -149,5 +165,160 @@ function limpiarFormulario(){
     document.getElementById("nombre").value = "";
 
     document.getElementById("correo").value = "";
+
+}
+
+
+
+
+
+
+
+
+// Buscar usuarios
+
+function buscarUsuario(){
+
+
+    const texto =
+    document
+    .getElementById("buscar")
+    .value
+    .toLowerCase();
+
+
+
+    const resultados =
+    usuarios.filter(usuario =>
+
+
+        usuario.nombre
+        .toLowerCase()
+        .includes(texto)
+
+
+    );
+
+
+
+    mostrarUsuarios(resultados);
+
+
+}
+
+
+
+
+
+
+
+
+// Dashboard
+
+function actualizarDashboard(){
+
+
+    const contador =
+    document.getElementById("totalUsuarios");
+
+
+    if(contador){
+
+        contador.textContent =
+        usuarios.length;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+// Exportar CSV
+
+function exportarUsuarios(){
+
+
+    if(usuarios.length === 0){
+
+
+        alert("No hay usuarios para exportar");
+
+        return;
+
+    }
+
+
+
+    let csv =
+    "ID,Nombre,Correo\n";
+
+
+
+    usuarios.forEach((usuario,index)=>{
+
+
+        csv +=
+        `${index + 1},${usuario.nombre},${usuario.correo}\n`;
+
+
+    });
+
+
+
+    const archivo =
+    new Blob(
+        [csv],
+        {
+            type:"text/csv"
+        }
+    );
+
+
+
+    const enlace =
+    document.createElement("a");
+
+
+
+    enlace.href =
+    URL.createObjectURL(archivo);
+
+
+
+    enlace.download =
+    "usuarios_exportados.csv";
+
+
+
+    enlace.click();
+
+
+
+    alert("Usuarios exportados correctamente");
+
+
+}
+
+
+
+
+
+
+
+
+function limpiarFormulario(){
+
+
+    document.getElementById("nombre").value = "";
+
+
+    document.getElementById("correo").value = "";
+
 
 }
