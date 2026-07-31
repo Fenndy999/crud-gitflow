@@ -2,74 +2,147 @@ let usuarios = [];
 let usuarioEditando = null;
 
 
+// =======================
+// LOGIN
+// =======================
+
+function iniciarSesion(){
+
+    const usuario =
+    document.getElementById("usuario").value.trim();
+
+    const clave =
+    document.getElementById("clave").value.trim();
+
+
+    if(usuario === "admin" && clave === "1234"){
+
+        document.getElementById("login").style.display = "none";
+
+        document.getElementById("crud").style.display = "block";
+
+        alert("Bienvenido al sistema.");
+
+    }
+
+    else{
+
+        alert("Usuario o contraseña incorrectos.");
+
+    }
+
+}
+
+
+function cerrarSesion(){
+
+    document.getElementById("usuario").value = "";
+
+    document.getElementById("clave").value = "";
+
+    document.getElementById("login").style.display = "block";
+
+    document.getElementById("crud").style.display = "none";
+
+}
+
+
+
+// =======================
+// CRUD
+// =======================
+
 function guardarUsuario(){
 
-    const nombre = document.getElementById("nombre").value;
-    const correo = document.getElementById("correo").value;
+    const nombre =
+    document.getElementById("nombre").value.trim();
+
+    const correo =
+    document.getElementById("correo").value.trim();
 
 
     if(nombre === "" || correo === ""){
 
-        alert("Complete todos los campos");
+        alert("Complete todos los campos.");
+
         return;
 
     }
 
 
-    // Modo editar
+    // Evitar correos repetidos
+    const existe = usuarios.some(
+
+        (usuario,index)=>
+
+        usuario.correo.toLowerCase() === correo.toLowerCase()
+
+        && index !== usuarioEditando
+
+    );
+
+    if(existe){
+
+        alert("Ese correo ya está registrado.");
+
+        return;
+
+    }
+
+
     if(usuarioEditando !== null){
 
         usuarios[usuarioEditando].nombre = nombre;
+
         usuarios[usuarioEditando].correo = correo;
 
         usuarioEditando = null;
 
-        document.getElementById("btnGuardar").textContent = "Guardar Usuario";
+        document.getElementById("btnGuardar").textContent =
+        "Guardar Usuario";
 
+    }
 
-    } 
-    // Modo crear
-    else {
+    else{
 
         usuarios.push({
 
-            nombre: nombre,
-            correo: correo
+            nombre,
+
+            correo
 
         });
 
     }
 
 
+    limpiarFormulario();
+
     mostrarUsuarios();
-
-
-    document.getElementById("nombre").value = "";
-    document.getElementById("correo").value = "";
 
 }
 
 
 
-
 function mostrarUsuarios(){
 
-    const lista = document.getElementById("listaUsuarios");
+    const lista =
+    document.getElementById("listaUsuarios");
 
     lista.innerHTML = "";
 
 
     usuarios.forEach((usuario,index)=>{
 
-
         lista.innerHTML += `
 
         <li>
 
             <strong>${usuario.nombre}</strong>
-            -
-            ${usuario.correo}
 
+            <br>
+
+            ${usuario.correo}
 
             <button onclick="editarUsuario(${index})">
 
@@ -77,58 +150,57 @@ function mostrarUsuarios(){
 
             </button>
 
-
             <button onclick="eliminarUsuario(${index})">
 
                 Eliminar
 
             </button>
 
-
         </li>
 
         `;
 
-
     });
 
-
 }
-
-
 
 
 
 function editarUsuario(indice){
 
+    document.getElementById("nombre").value =
+    usuarios[indice].nombre;
 
-    const usuario = usuarios[indice];
-
-
-    document.getElementById("nombre").value = usuario.nombre;
-
-    document.getElementById("correo").value = usuario.correo;
-
+    document.getElementById("correo").value =
+    usuarios[indice].correo;
 
     usuarioEditando = indice;
 
-
-    document.getElementById("btnGuardar").textContent = 
+    document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
-
 
 }
 
 
 
-
 function eliminarUsuario(indice){
 
+    if(confirm("¿Desea eliminar este usuario?")){
 
-    usuarios.splice(indice,1);
+        usuarios.splice(indice,1);
+
+        mostrarUsuarios();
+
+    }
+
+}
 
 
-    mostrarUsuarios();
 
+function limpiarFormulario(){
+
+    document.getElementById("nombre").value = "";
+
+    document.getElementById("correo").value = "";
 
 }
