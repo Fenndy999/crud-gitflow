@@ -16,70 +16,55 @@
 
 <body>
 
+    <h1>CRUD de Usuarios</h1>
 
-<h1>CRUD de Usuarios - Versión 1.0</h1>
+    <p class="descripcion">
+        Sistema para registrar, editar y eliminar usuarios de forma sencilla.
+    </p>
 
+    <div class="formulario">
 
-<p class="descripcion">
-    Sistema de gestión de usuarios con creación,
-    edición, eliminación y exportación de información.
-</p>
+        <h2>Registro de Usuario</h2>
 
+        <label for="nombre">
+            Nombre
+        </label>
 
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Ingrese el nombre"
+        >
 
-<div class="formulario">
+        <label for="correo">
+            Correo electrónico
+        </label>
 
+        <input
+            type="email"
+            id="correo"
+            placeholder="Ingrese el correo"
+        >
 
-    <h2>Registrar Usuario</h2>
+        <button
+            onclick="guardarUsuario()"
+            id="btnGuardar">
 
+            Guardar Usuario
 
-    <label>
-        Nombre completo
-    </label>
-
-
-    <input
-        type="text"
-        id="nombre"
-        placeholder="Ingrese el nombre"
-    >
-
-
-
-    <label>
-        Correo electrónico
-    </label>
-
-
-    <input
-        type="email"
-        id="correo"
-        placeholder="Ingrese el correo"
-    >
-
-
-
-    <button onclick="guardarUsuario()" id="btnGuardar">
-
-        Guardar Usuario
-
-    </button>
-
-
-</div>
-
-
-
+        </button>
 
 <div class="dashboard">
 
+    <hr>
 
-    <h2>Panel de usuarios</h2>
+    <h2>Lista de Usuarios</h2>
 
+    <p id="mensajeVacio">
+        No hay usuarios registrados.
+    </p>
 
-    <p>
-
-        Usuarios registrados:
+    <ul id="listaUsuarios">
 
         <strong id="totalUsuarios">
             0
@@ -132,7 +117,7 @@ class="exportar">
 
 <script src="script.js"></script>
 
-
+    <script src="script.js"></script>
 
 </body>
 

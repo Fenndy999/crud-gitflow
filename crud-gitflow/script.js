@@ -2,19 +2,13 @@ let usuarios = [];
 
 let usuarioEditando = null;
 
-
-
 function guardarUsuario(){
-
 
     const nombre =
     document.getElementById("nombre").value.trim();
 
-
     const correo =
     document.getElementById("correo").value.trim();
-
-
 
     if(nombre === "" || correo === ""){
 
@@ -24,16 +18,22 @@ function guardarUsuario(){
 
     }
 
+    const existe = usuarios.some(
 
+        (usuario, index) =>
 
-    if(!correo.includes("@")){
+            usuario.correo.toLowerCase() === correo.toLowerCase() &&
+            index !== usuarioEditando
 
-        alert("Ingrese un correo válido");
+    );
+
+    if(existe){
+
+        alert("Ya existe un usuario con ese correo.");
 
         return;
 
     }
-
 
 
     // Editar usuario
@@ -48,17 +48,13 @@ function guardarUsuario(){
 
         usuarioEditando = null;
 
-
         document.getElementById("btnGuardar").textContent =
         "Guardar Usuario";
 
-
     }
 
-
-    // Crear usuario
-
-    else {
+    // Modo crear
+    else{
 
 
         usuarios.push({
@@ -72,27 +68,33 @@ function guardarUsuario(){
 
     }
 
-
-
     limpiarFormulario();
-
-    mostrarUsuarios();
 
 
 }
 
+function mostrarUsuarios(){
 
-
-
-
-
-
-function mostrarUsuarios(lista = usuarios){
-
-
-    const listaHTML =
+    const lista =
     document.getElementById("listaUsuarios");
 
+    const mensaje =
+    document.getElementById("mensajeVacio");
+
+    lista.innerHTML = "";
+
+    if(usuarios.length === 0){
+
+        mensaje.style.display = "block";
+
+        return;
+
+    }
+
+    mensaje.style.display = "none";
+
+
+        lista.innerHTML += `
 
     listaHTML.innerHTML = "";
 
@@ -111,7 +113,6 @@ function mostrarUsuarios(lista = usuarios){
 
             ${usuario.correo}
 
-
         ul.innerHTML += `
 
         <li>
@@ -120,84 +121,50 @@ function mostrarUsuarios(lista = usuarios){
         <br>
         ${usuario.correo}
 
-
-        <button onclick="editarUsuario(${index})">
-        Editar
-        </button>
+            <button onclick="eliminarUsuario(${index})">
 
 
         <button onclick="eliminarUsuario(${index})">
         Eliminar
         </button>
 
-
         </li>
 
         `;
 
-
     });
-
-
-
-    actualizarDashboard();
-
 
 }
 
-
-
-
-
-
-
-
 function editarUsuario(indice){
 
-function editarUsuario(index){
-
-    const usuario =
-    usuarios[indice];
-
-
-    document.getElementById("nombre").value =
-    usuarios[index].nombre;
+    const usuario = usuarios[indice];
 
     document.getElementById("nombre").value =
     usuario.nombre;
-
-
 
     document.getElementById("correo").value =
     usuario.correo;
 
 
-
-
-    usuarioEditando = index;
-
-
     document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
 
-
 }
-
-
-
-
-
-
-
 
 function eliminarUsuario(indice){
 
-
-    usuarios.splice(index,1);
-
+    usuarios.splice(indice,1);
 
     mostrarUsuarios();
 
+}
+
+function limpiarFormulario(){
+
+    document.getElementById("nombre").value = "";
+
+    document.getElementById("correo").value = "";
 
 }
 
