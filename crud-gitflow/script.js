@@ -1,4 +1,4 @@
-let usuarios = [];
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
 let usuarioEditando = null;
 
@@ -6,26 +6,18 @@ let usuarioEditando = null;
 // LOGIN
 // =======================
 
-function iniciarSesion(){
+// Cargar usuarios al iniciar
+document.addEventListener("DOMContentLoaded", () => {
 
-    const usuario =
-    document.getElementById("usuario").value.trim();
+    mostrarUsuarios();
 
-    const clave =
-    document.getElementById("clave").value.trim();
+});
 
 
-    if(usuario === "admin" && clave === "1234"){
 
-        document.getElementById("login").style.display = "none";
 
-        document.getElementById("crud").style.display = "block";
-
-        alert("Bienvenido al sistema.");
-
-    }
-
-    else{
+// Guardar o actualizar usuario
+function guardarUsuario(){
 
         alert("Usuario o contraseña incorrectos.");
 
@@ -65,8 +57,7 @@ function guardarUsuario(){
 
     if(nombre === "" || correo === ""){
 
-        alert("Complete todos los campos.");
-
+        alert("Complete todos los campos");
         return;
 
     }
@@ -77,9 +68,8 @@ function guardarUsuario(){
 
         (usuario,index)=>
 
-        usuario.correo.toLowerCase() === correo.toLowerCase()
-
-        && index !== usuarioEditando
+        alert("Ingrese un correo válido");
+        return;
 
     );
 
@@ -105,11 +95,14 @@ function guardarUsuario(){
         document.getElementById("btnGuardar").textContent =
         "Guardar Usuario";
 
-    }
 
-    else{
+
+    }else{
+
 
         usuarios.push({
+
+            id: Date.now(),
 
             nombre,
 
@@ -119,6 +112,10 @@ function guardarUsuario(){
 
 
     }
+
+
+
+    guardarDatos();
 
     limpiarFormulario();
 
@@ -139,7 +136,8 @@ function mostrarUsuarios(){
 
         mensaje.style.display = "block";
 
-        return;
+// Mostrar usuarios
+function mostrarUsuarios(lista = usuarios){
 
     }
 
@@ -148,10 +146,13 @@ function mostrarUsuarios(){
 
         lista.innerHTML += `
 
+    if(!listaHTML) return;
+
+
+
     listaHTML.innerHTML = "";
 
 
-    ul.innerHTML = "";
 
     lista.forEach((usuario,index)=>{
 
@@ -159,28 +160,31 @@ function mostrarUsuarios(){
         listaHTML.innerHTML += `
 
 
+        <li>
+
+
             <strong>${usuario.nombre}</strong>
+
 
             <br>
 
+
             ${usuario.correo}
 
-        ul.innerHTML += `
 
-        <li>
 
-        <strong>${usuario.nombre}</strong>
-        <br>
-        ${usuario.correo}
+            <button onclick="editarUsuario(${index})">
+                Editar
+            </button>
+
+
 
             <button onclick="eliminarUsuario(${index})">
-
-
-        <button onclick="eliminarUsuario(${index})">
-        Eliminar
-        </button>
+                Eliminar
+            </button>
 
         </li>
+
 
         `;
 
@@ -188,9 +192,20 @@ function mostrarUsuarios(){
 
 }
 
-function editarUsuario(indice){
 
-    const usuario = usuarios[indice];
+
+
+
+
+
+// Editar usuario
+function editarUsuario(index){
+
+
+    const usuario =
+    usuarios[index];
+
+
 
     document.getElementById("nombre").value =
     usuario.nombre;
@@ -199,16 +214,44 @@ function editarUsuario(indice){
     usuario.correo;
 
 
+
+    usuarioEditando = index;
+
+
+
     document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
 
 }
 
-function eliminarUsuario(indice){
+
+
+
+
+
+
+// Eliminar usuario
+function eliminarUsuario(index){
+
+
+    const confirmar =
+    confirm("¿Desea eliminar este usuario?");
+
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
 
     usuarios.splice(indice,1);
 
     limpiarFormulario();
+
+
+    guardarDatos();
 
     mostrarUsuarios();
 
@@ -224,8 +267,8 @@ function mostrarUsuarios(){
 
 
 // Buscar usuarios
+function buscarUsuario(){
 
-        lista.innerHTML += `
 
     const texto =
     document
@@ -247,7 +290,15 @@ function mostrarUsuarios(){
         .toLowerCase()
         .includes(texto)
 
-            <button onclick="eliminarUsuario(${index})">
+        ||
+
+        usuario.correo
+        .toLowerCase()
+        .includes(texto)
+
+
+    );
+
 
 
 
@@ -256,7 +307,30 @@ function mostrarUsuarios(){
 }
 
 
-    });
+
+
+
+
+
+
+// Actualizar contador
+function actualizarDashboard(){
+
+
+    const contador =
+    document.getElementById("totalUsuarios");
+
+
+
+    if(contador){
+
+
+        contador.textContent =
+        usuarios.length;
+
+
+    }
+
 
 }
 
@@ -275,18 +349,89 @@ function editarUsuario(indice){
     document.getElementById("btnGuardar").textContent =
     "Actualizar Usuario";
 
-}
+// Exportar CSV
+function exportarUsuarios(){
+
+
+    if(usuarios.length === 0){
 
 
         alert("No hay usuarios para exportar");
 
-function eliminarUsuario(indice){
+        return;
+
+    }
+
+
+
+    let csv =
+    "ID,Nombre,Correo\n";
+
+
+
+    usuarios.forEach((usuario,index)=>{
+
+
+        csv +=
+        `${index + 1},"${usuario.nombre}","${usuario.correo}"\n`;
+
+
+    });
+
+
+
+
+    const archivo =
+    new Blob(
+
+        [csv],
+
+        {
+            type:"text/csv;charset=utf-8;"
+        }
+
+    );
+
+
+
+    const enlace =
+    document.createElement("a");
+
+
+
+    enlace.href =
+    URL.createObjectURL(archivo);
+
+
+
+    enlace.download =
+    "usuarios_exportados.csv";
+
+
+
+    enlace.click();
 
     if(confirm("¿Desea eliminar este usuario?")){
 
-        usuarios.splice(indice,1);
+}
 
-        mostrarUsuarios();
+
+
+
+
+
+
+// Guardar en navegador
+function guardarDatos(){
+
+
+    localStorage.setItem(
+
+        "usuarios",
+
+        JSON.stringify(usuarios)
+
+    );
 
     }
 
@@ -294,6 +439,12 @@ function eliminarUsuario(indice){
 
 
 
+
+
+
+
+
+// Limpiar campos
 function limpiarFormulario(){
 
     document.getElementById("nombre").value = "";
