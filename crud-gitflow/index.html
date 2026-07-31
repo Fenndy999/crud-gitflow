@@ -1,48 +1,138 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CRUD de Usuarios - 1.0</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
+
 <body>
-    <h1>CRUD de Usuarios</h1>
-
-    <div class="formulario">
-
-        <input
-            type="text"
-            id="nombre"
-            placeholder="Nombre del usuario"
-        >
-
-        <input
-            type="email"
-            id="correo"
-            placeholder="Correo del usuario"
-        >
-
-        <button onclick="guardarUsuario()" id="btnGuardar">
-            Guardar Usuario
-        </button>
-
-    </div>
 
 
-    <hr>
+<h1>CRUD de Usuarios - Versión 1.0</h1>
 
 
-    <h2>Lista de Usuarios</h2>
+<p class="descripcion">
+    Sistema de gestión de usuarios con creación,
+    edición, eliminación y exportación de información.
+</p>
 
-    <ul id="listaUsuarios">
-
-    </ul>
 
 
-    <script src="script.js"></script>
+<div class="formulario">
+
+
+    <h2>Registrar Usuario</h2>
+
+
+    <label>
+        Nombre completo
+    </label>
+
+
+    <input
+        type="text"
+        id="nombre"
+        placeholder="Ingrese el nombre"
+    >
+
+
+
+    <label>
+        Correo electrónico
+    </label>
+
+
+    <input
+        type="email"
+        id="correo"
+        placeholder="Ingrese el correo"
+    >
+
+
+
+    <button onclick="guardarUsuario()" id="btnGuardar">
+
+        Guardar Usuario
+
+    </button>
+
+
+</div>
+
+
+
+
+<div class="dashboard">
+
+
+    <h2>Panel de usuarios</h2>
+
+
+    <p>
+
+        Usuarios registrados:
+
+        <strong id="totalUsuarios">
+            0
+        </strong>
+
+    </p>
+
+
+</div>
+
+
+
+
+<hr>
+
+
+
+
+<h2>Lista de Usuarios</h2>
+
+
+
+
+<input
+    type="text"
+    id="buscar"
+    placeholder="Buscar usuario..."
+    onkeyup="buscarUsuario()"
+>
+
+
+
+<button 
+onclick="exportarUsuarios()"
+class="exportar">
+
+    Exportar usuarios CSV
+
+</button>
+
+
+
+
+<ul id="listaUsuarios">
+
+</ul>
+
+
+
+
+<script src="script.js"></script>
+
 
 </body>
+
 </html>
