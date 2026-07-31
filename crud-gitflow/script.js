@@ -1,4 +1,5 @@
 let usuarios = [];
+
 let usuarioEditando = null;
 
 
@@ -96,13 +97,13 @@ function mostrarUsuarios(lista = usuarios){
     listaHTML.innerHTML = "";
 
 
+    ul.innerHTML = "";
 
     lista.forEach((usuario,index)=>{
 
 
         listaHTML.innerHTML += `
 
-        <li>
 
             <strong>${usuario.nombre}</strong>
 
@@ -111,18 +112,23 @@ function mostrarUsuarios(lista = usuarios){
             ${usuario.correo}
 
 
-            <button onclick="editarUsuario(${index})">
+        ul.innerHTML += `
 
-                Editar
+        <li>
 
-            </button>
+        <strong>${usuario.nombre}</strong>
+        <br>
+        ${usuario.correo}
 
 
-            <button onclick="eliminarUsuario(${index})">
+        <button onclick="editarUsuario(${index})">
+        Editar
+        </button>
 
-                Eliminar
 
-            </button>
+        <button onclick="eliminarUsuario(${index})">
+        Eliminar
+        </button>
 
 
         </li>
@@ -148,11 +154,14 @@ function mostrarUsuarios(lista = usuarios){
 
 function editarUsuario(indice){
 
+function editarUsuario(index){
 
     const usuario =
     usuarios[indice];
 
 
+    document.getElementById("nombre").value =
+    usuarios[index].nombre;
 
     document.getElementById("nombre").value =
     usuario.nombre;
@@ -164,8 +173,8 @@ function editarUsuario(indice){
 
 
 
-    usuarioEditando = indice;
 
+    usuarioEditando = index;
 
 
     document.getElementById("btnGuardar").textContent =
@@ -184,7 +193,7 @@ function editarUsuario(indice){
 function eliminarUsuario(indice){
 
 
-    usuarios.splice(indice,1);
+    usuarios.splice(index,1);
 
 
     mostrarUsuarios();
