@@ -2,48 +2,67 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CRUD de Usuarios - 1.0</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 
 <body>
 
 
-    <h1>CRUD de Usuarios - Versión 1.0</h1>
+<h1>CRUD de Usuarios - Versión 1.0</h1>
 
 
 <p class="descripcion">
-    Sistema de gestión de usuarios con opciones para crear,
-    editar, eliminar y administrar información.
+    Sistema de gestión de usuarios con creación,
+    edición, eliminación y exportación de información.
 </p>
 
-<h1>CRUD de Usuarios</h1>
 
 
 <div class="formulario">
 
 
+    <h2>Registrar Usuario</h2>
+
+
+    <label>
+        Nombre completo
+    </label>
+
+
     <input
         type="text"
         id="nombre"
-        placeholder="Nombre del usuario"
+        placeholder="Ingrese el nombre"
     >
+
+
+
+    <label>
+        Correo electrónico
+    </label>
 
 
     <input
         type="email"
         id="correo"
-        placeholder="Correo del usuario"
+        placeholder="Ingrese el correo"
     >
 
 
+
     <button onclick="guardarUsuario()" id="btnGuardar">
+
         Guardar Usuario
+
     </button>
 
 
@@ -51,81 +70,68 @@
 
 
 
-        <h2>Registrar Usuario</h2>
+
+<div class="dashboard">
 
 
-        <label for="nombre">
-            Nombre completo
-        </label>
+    <h2>Panel de usuarios</h2>
 
 
-        <input
-            type="text"
-            id="nombre"
-            placeholder="Ingrese el nombre del usuario"
-        >
+    <p>
 
+        Usuarios registrados:
 
+        <strong id="totalUsuarios">
+            0
+        </strong>
 
-        <label for="correo">
-            Correo electrónico
-        </label>
+    </p>
 
-
-        <input
-            type="email"
-            id="correo"
-            placeholder="Ingrese el correo del usuario"
-        >
-
-
-
-        <button onclick="guardarUsuario()" id="btnGuardar">
-            Guardar Usuario
-        </button>
-
-
-    </div>
 
 </div>
 
 
 
-    <div class="dashboard">
+
+<hr>
 
 
-        <h2>Panel de usuarios</h2>
-
-
-        <p>
-            Total de usuarios registrados:
-            <strong id="totalUsuarios">0</strong>
-        </p>
-
-
-    </div>
-
-
-
-
-    <hr>
-
-
-
-
-    <h2>Lista de Usuarios</h2>
-
-
-
-
-    <ul id="listaUsuarios">
 
 
 <h2>Lista de Usuarios</h2>
 
 
 
-    <script src="script.js"></script>
+
+<input
+    type="text"
+    id="buscar"
+    placeholder="Buscar usuario..."
+    onkeyup="buscarUsuario()"
+>
+
+
+
+<button 
+onclick="exportarUsuarios()"
+class="exportar">
+
+    Exportar usuarios CSV
+
+</button>
+
+
+
+
+<ul id="listaUsuarios">
+
+</ul>
+
+
+
+
+<script src="script.js"></script>
+
 
 
 </body>
