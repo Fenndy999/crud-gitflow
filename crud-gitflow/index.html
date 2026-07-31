@@ -1,48 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CRUD de Usuarios - 1.0</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
-    <h1>CRUD de Usuarios</h1>
 
-    <div class="formulario">
-
-        <input
-            type="text"
-            id="nombre"
-            placeholder="Nombre del usuario"
-        >
-
-        <input
-            type="email"
-            id="correo"
-            placeholder="Correo del usuario"
-        >
-
-        <button onclick="guardarUsuario()" id="btnGuardar">
-            Guardar Usuario
-        </button>
-
-    </div>
+<h1>CRUD de Usuarios</h1>
 
 
-    <hr>
+<div class="formulario">
 
 
-    <h2>Lista de Usuarios</h2>
+    <input
+        type="text"
+        id="nombre"
+        placeholder="Nombre del usuario"
+    >
 
-    <ul id="listaUsuarios">
 
-    </ul>
+    <input
+        type="email"
+        id="correo"
+        placeholder="Correo del usuario"
+    >
 
 
-    <script src="script.js"></script>
+    <button onclick="guardarUsuario()" id="btnGuardar">
+        Guardar Usuario
+    </button>
+
+
+</div>
+
+
+
+<div class="dashboard">
+
+    <h2>Panel de usuarios</h2>
+
+    <p>
+        Total de usuarios:
+        <strong id="totalUsuarios">0</strong>
+    </p>
+
+</div>
+
+
+
+<hr>
+
+
+
+<h2>Lista de Usuarios</h2>
+
+
+
+<input
+    type="text"
+    id="buscar"
+    placeholder="Buscar usuario..."
+    onkeyup="buscarUsuario()"
+>
+
+
+
+<button onclick="exportarUsuarios()">
+    Exportar usuarios
+</button>
+
+
+
+<ul id="listaUsuarios">
+
+</ul>
+
+
+
+
+<script src="script.js"></script>
 
 </body>
+
 </html>
